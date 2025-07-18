@@ -1,6 +1,4 @@
 ﻿using WebApplication2.Data;
-using WebApplication2.Data;
-using WebApplication2.Models;
 using WebApplication2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using WebApplication2.Data;
 
 namespace WebApplication2.Controllers
 {
