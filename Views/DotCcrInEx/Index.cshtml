@@ -1,0 +1,156 @@
+﻿@model WebApplication2.Models.DotCcrInExIndexViewModel
+@{
+    ViewData["Title"] = "Dotación Interna y Externa";
+    var f = Model;        // Modelo con filtros + resultados
+    var brandPurple = "#553475"; // color institucional (Banco Ripley)
+}
+
+<!-- =================== ENCABEZADO =================== -->
+<h1 class="text-center mb-4 fw-bold" style="color:@brandPurple">@ViewData["Title"]</h1>
+
+<!-- =================== FORMULARIO DE BÚSQUEDA =================== -->
+<div class="row justify-content-center mb-4">
+    <div class="col-xl-10 col-lg-11">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-white" style="background-color:@brandPurple">
+                <strong>Filtros de búsqueda</strong>
+            </div>
+            <div class="card-body pt-3">
+                <form asp-action="Index" method="get">
+                    <div class="row g-3">
+                        <div class="col-md-2">
+                            <label class="form-label">Rut / DNI</label>
+                            <input class="form-control form-control-sm" name="rutFilter" value="@f.RutFilter" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Agente</label>
+                            <input class="form-control form-control-sm" name="agenteFilter" value="@f.AgenteFilter" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">País CC</label>
+                            <select class="form-select form-select-sm" name="paisFilter" asp-items="Model.PaisCallCenterList">
+                                <option value="">-- Todos --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Nombre CC</label>
+                            <select class="form-select form-select-sm" name="nombreCcFilter" asp-items="Model.NombreCallCenterList">
+                                <option value="">-- Todos --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Área</label>
+                            <select class="form-select form-select-sm" name="areaFilter" asp-items="Model.AreaList">
+                                <option value="">-- Todas --</option>
+                            </select>
+                        </div>
+                        <!--  NUEVOS FILTROS AQUÍ  -->
+                    </div>
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mt-4">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-primary px-4">Filtrar</button>
+                            <a asp-action="Index" class="btn btn-sm btn-secondary px-4">Limpiar</a>
+                        </div>
+                        <a asp-action="Create" class="btn btn-sm btn-success">Crear Agente</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =================== TABLA DE RESULTADOS =================== -->
+<style>
+    /* Ajustes de densidad y tipografía */
+    .table-fit {
+        width: auto !important;           /* evita scroll horizontal */
+        margin: 0 auto;                  /* centrado en contenedor */
+        font-size: .83rem;               /* texto ligeramente más pequeño */
+    }
+    .table-fit th, .table-fit td {
+        padding: .35rem .55rem;
+        vertical-align: middle;
+        white-space: nowrap;             /* evita saltos pero… */
+    }
+
+    /* Truncar texto demasiado largo manteniendo accesibilidad */
+    .truncate {
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .truncate:hover {
+        overflow: visible;
+        white-space: normal;
+    }
+</style>
+
+<div class="table-responsive"> <!-- permite scroll en móviles sin afectar desktop -->
+    <table class="table table-bordered table-striped table-hover table-fit shadow-sm">
+        <thead class="text-center text-white" style="background-color:@brandPurple">
+            <tr>
+                <th></th>
+                <th>Rut / DNI</th>
+                <th>Agente</th>
+                <th>País CC</th>
+                <th>Nombre CC</th>
+                <th>Área</th>
+                <th>Área Gestión</th>
+                <th>Contrato</th>
+                <th>Tipo</th>
+                <th>Servicio</th>
+                <th>Jefatura</th>
+                <th>Rut Ficticio</th>
+                <th>DV</th>
+                <th>Clasifica</th>
+                <th>Cargo</th>
+                <th>Ingreso</th>
+                <th>Baja</th>
+                <th>N° Personal</th>
+                <th>Correo</th>
+                <th>Mes</th>
+                <th>Genesys</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle text-center">
+            @if (!Model.Results.Any())
+            {
+                <tr>
+                    <td colspan="21" class="text-muted text-center">Sin registros que mostrar…</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var r in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@r.RutDni" class="btn btn-sm btn-outline-primary">Editar</a>
+                        </td>
+                        <td>@r.RutDni</td>
+                        <td>@r.Agente</td>
+                        <td>@r.PaisCallCenter</td>
+                        <td>@r.NombreCallCenter</td>
+                        <td>@r.Area</td>
+                        <td>@r.AreaGestion</td>
+                        <td>@r.Contrato</td>
+                        <td>@r.TiposDeAgente</td>
+                        <td>@r.Servicio</td>
+                        <td>@r.NombreJefatura</td>
+                        <td>@r.RutFicticio</td>
+                        <td>@r.DV</td>
+                        <td>@r.ClasificaCargo</td>
+                        <td>@r.Cargo</td>
+                        <td>@r.FechaIngreso?.ToString("yyyy-MM-dd")</td>
+                        <td>@r.FechaBaja?.ToString("yyyy-MM-dd")</td>
+                        <td>@r.NumeroPersonal</td>
+                        <td class="truncate" title="@r.Correo">@r.Correo</td>
+                        <td>@r.MesGestion</td>
+                        <td>@r.UsuarioGenesys</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

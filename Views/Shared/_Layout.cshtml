@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Banco Ripley</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .navbar-ripley {
+            background-color: #553475 !important; /* Morado Ripley */
+        }
+        .navbar-brand.ripley-brand {
+            color: #fff !important;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            text-align: center;
+            width: 100%;
+        }
+        .navbar-brand.ripley-brand:hover {
+            color: #e0e0e0 !important;
+        }
+        .navbar .container {
+            justify-content: center !important;
+        }
+        .main-centered {
+            min-height: 70vh;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-ripley border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand ripley-brand" asp-area="" asp-controller="DotCcrInEx" asp-action="Index">Banco Ripley</a>
+            </div>
+        </nav>
+    </header>
+    <div class="container d-flex justify-content-center main-centered">
+        <main role="main" class="pb-3 w-100">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container text-center">
+            &copy; 2025 - Ignacio Azua - Dpto. Control de Gestión y Calidad - Banco Ripley
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

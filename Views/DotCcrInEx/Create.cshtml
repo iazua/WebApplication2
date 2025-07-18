@@ -1,0 +1,205 @@
+﻿@model WebApplication2.Models.PersonRecord
+@{
+    ViewData["Title"] = "Crear Agente";
+    var brandPurple = "#553475"; // color corporativo
+}
+
+<h1 class="text-center fw-bold mb-4" style="color:@brandPurple">@ViewData["Title"]</h1>
+
+<style>
+    .uniform-input {
+        min-height: 38px;
+        font-size: 0.9rem;
+    }
+    .form-label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+    }
+    .section-title {
+        color: @brandPurple;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-bottom: 2px solid @brandPurple;
+        padding-bottom: 0.5rem;
+        margin: 1.5rem 0 1rem 0;
+    }
+    .form-section {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    .validation-error {
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+    }
+    /* Nuevos estilos para los dropdowns */
+    .dropdown-container {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+    .form-select {
+        width: 100%;
+        position: static;
+        margin-top: 0.25rem;
+    }
+</style>
+
+<div class="container">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <form asp-action="Create" class="row g-3">
+                
+                <!-- SECCIÓN 1: INFORMACIÓN BÁSICA -->
+                <div class="col-12 form-section">
+                    <h5 class="section-title">Información Básica</h5>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label asp-for="RutDni" class="form-label">RUT/DNI *</label>
+                            <input asp-for="RutDni" class="form-control uniform-input" placeholder="Ej: 12345678-9" />
+                            <span asp-validation-for="RutDni" class="text-danger validation-error"></span>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="DV" class="form-label">Dígito Verificador</label>
+                            <select asp-for="DV" class="form-select uniform-input" asp-items="ViewBag.DVList">
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label asp-for="RutFicticio" class="form-label">RUT Ficticio</label>
+                            <input asp-for="RutFicticio" class="form-control uniform-input" placeholder="Opcional" />
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label asp-for="Agente" class="form-label">Nombre del Agente</label>
+                            <input asp-for="Agente" class="form-control uniform-input" placeholder="Nombre completo" />
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label asp-for="Correo" class="form-label">Correo Electrónico *</label>
+                            <input asp-for="Correo" class="form-control uniform-input" placeholder="ejemplo@dominio.com" />
+                            <span asp-validation-for="Correo" class="text-danger validation-error"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: INFORMACIÓN LABORAL -->
+                <div class="col-12 form-section">
+                    <h5 class="section-title">Información Laboral</h5>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label asp-for="FechaIngreso" class="form-label">Fecha de Ingreso</label>
+                            <input asp-for="FechaIngreso" type="date" class="form-control uniform-input" />
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label asp-for="FechaBaja" class="form-label">Fecha de Baja</label>
+                            <input asp-for="FechaBaja" type="date" class="form-control uniform-input" />
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="MesGestion" class="form-label">Mes de Gestión</label>
+                            <select asp-for="MesGestion" class="form-select uniform-input" asp-items="ViewBag.MesGestionList">
+                                <option value="">Seleccione mes...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="TiposDeAgente" class="form-label">Tipo de Agente</label>
+                            <select asp-for="TiposDeAgente" class="form-select uniform-input" asp-items="ViewBag.TiposAgenteList">
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="Contrato" class="form-label">Tipo de Contrato</label>
+                            <select asp-for="Contrato" class="form-select uniform-input" asp-items="ViewBag.ContratoList">
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label asp-for="NumeroPersonal" class="form-label">Número de Personal</label>
+                            <input asp-for="NumeroPersonal" class="form-control uniform-input" placeholder="Número interno" />
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="ClasificaCargo" class="form-label">Clasificación de Cargo</label>
+                            <select asp-for="ClasificaCargo" class="form-select uniform-input" asp-items="ViewBag.ClasificaCargoList">
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="Cargo" class="form-label">Cargo</label>
+                            <select asp-for="Cargo" class="form-select uniform-input" asp-items="ViewBag.CargoList">
+                                <option value="">Seleccione...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="NombreJefatura" class="form-label">Jefatura Directa</label>
+                            <select asp-for="NombreJefatura" class="form-select uniform-input" asp-items="ViewBag.NombreJefaturaList">
+                                <option value="">Seleccione jefatura...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: INFORMACIÓN OPERACIONAL -->
+                <div class="col-12 form-section">
+                    <h5 class="section-title">Información Operacional</h5>
+                    <div class="row">
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="PaisCallCenter" class="form-label">País del Call Center</label>
+                            <select asp-for="PaisCallCenter" class="form-select uniform-input" asp-items="ViewBag.PaisCallCenterList">
+                                <option value="">Seleccione país...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="NombreCallCenter" class="form-label">Nombre del Call Center</label>
+                            <select asp-for="NombreCallCenter" class="form-select uniform-input" asp-items="ViewBag.NombreCallCenterList">
+                                <option value="">Seleccione call center...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="Servicio" class="form-label">Servicio</label>
+                            <select asp-for="Servicio" class="form-select uniform-input" asp-items="ViewBag.ServicioList">
+                                <option value="">Seleccione servicio...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="Area" class="form-label">Área</label>
+                            <select asp-for="Area" class="form-select uniform-input" asp-items="ViewBag.AreaList">
+                                <option value="">Seleccione área...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3 dropdown-container">
+                            <label asp-for="AreaGestion" class="form-label">Área de Gestión</label>
+                            <select asp-for="AreaGestion" class="form-select uniform-input" asp-items="ViewBag.AreaGestionList">
+                                <option value="">Seleccione área...</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 4: SISTEMAS -->
+                <div class="col-12 form-section">
+                    <h5 class="section-title">Accesos a Sistemas</h5>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label asp-for="UsuariosRcWeb" class="form-label">Usuario RC Web</label>
+                            <input asp-for="UsuariosRcWeb" class="form-control uniform-input" placeholder="Usuario de sistema" />
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label asp-for="UsuarioGenesys" class="form-label">Usuario Genesys</label>
+                            <input asp-for="UsuarioGenesys" class="form-control uniform-input" placeholder="Usuario de Genesys" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="col-12 d-flex justify-content-end pt-3">
+                    <button type="submit" class="btn btn-success me-3 px-4">
+                        <i class="fas fa-save me-2"></i>Guardar
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
